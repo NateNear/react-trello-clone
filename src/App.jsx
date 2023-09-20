@@ -19,7 +19,7 @@ function App() {
       <Router>
         <h3 style={{ backgroundColor: "#026aa7", color: "white" }} className="panel-footer">
           <Navbar boards={boards} boardOrder={boardOrder}></Navbar>
-          <em style={{ color: "#8bbdd9" }}>Trello</em>
+          <em style={{ color: "#8bbdd9" }}>Zuddl</em>
         </h3>
         <Routes>
           <Route path="/" element={<BoardCollection />} />
