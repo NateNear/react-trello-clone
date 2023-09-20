@@ -1,20 +1,21 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Navbar from './Navbar';
-import AddBoard from './AddBoard';
+import AddBoard from './BoardAdd';
+import PropTypes from 'prop-types';
 
-class BoardCollection extends Component {
-  componentDidMount() {
+const BoardCollection = () => {
+  const boards = useSelector(state => state.boards);
+  const boardOrder = useSelector(state => state.boardOrder);
+
+  useEffect(() => {
     document.body.style.backgroundColor = 'white';
-  }
+  }, []);
 
-  renderBoards() {
-    const { boardOrder, boards } = this.props;
-
+  const renderBoards = () => {
     return (
       <div>
-        {boardOrder.map((boardID) => {
+        {boardOrder.map(boardID => {
           const board = boards[boardID];
           return (
             <Link
@@ -28,27 +29,25 @@ class BoardCollection extends Component {
         })}
       </div>
     );
-  }
+  };
 
-  render() {
-    return (
-      <div>
-        <h3>
-          <i className="fa fa-user-o"></i>
-          Personal Boards
-        </h3>
-        <div className="renderBoard board-container">
-          {this.renderBoards()}
-          <AddBoard boards={this.props.boards}></AddBoard>
-        </div>
+  return (
+    <div>
+      <h3>
+        <i className="fa fa-user-o"></i>
+        Personal Boards
+      </h3>
+      <div className="renderBoard board-container">
+        {renderBoards()}
+        <AddBoard boards={boards}></AddBoard>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
-const mapStateToProps = (state) => ({
-  boards: state.boards,
-  boardOrder: state.boardOrder,
-});
+BoardCollection.propTypes = {
+  boards: PropTypes.object.isRequired,
+  boardOrder: PropTypes.array.isRequired,
+};
 
-export default connect(mapStateToProps)(BoardCollection);
+export default BoardCollection;
